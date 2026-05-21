@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EFT Kappa Collector Checklist</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #121212;
+      --bg-soft: #181818;
+      --panel: #232323;
+      --panel-2: #2c2c2c;
+      --panel-3: #353535;
+      --text: #e9e1cf;
+      --text-strong: #fff0c2;
+      --muted: #9d9688;
+      --accent: #e5a93b;
+      --accent-soft: rgba(229, 169, 59, 0.14);
+      --green: #4e8242;
+      --green-bright: #6daf5e;
+      --green-soft: rgba(78, 130, 66, 0.18);
+      --danger: #bd5144;
+      --danger-soft: rgba(189, 81, 68, 0.15);
+      --border: rgba(229, 169, 59, 0.22);
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow: rgba(0, 0, 0, 0.48);
+      --focus: #f3c76f;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 13px;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(229, 169, 59, 0.11), transparent 34rem),
+        radial-gradient(circle at top right, rgba(78, 130, 66, 0.12), transparent 32rem),
+        linear-gradient(180deg, #0f0f0f, var(--bg) 36rem);
+      color: var(--text);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(18, 18, 18, 0.94);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 10px 34px var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 28px));
+      margin: 0 auto;
+      padding: 14px 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .brand-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0 0 5px;
+      color: var(--accent);
+      font-size: clamp(1.25rem, 2.6vw, 2rem);
+      line-height: 1.1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 14px rgba(229, 169, 59, 0.15);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: #bcb39f;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .progress-summary {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .progress-badge {
+      min-width: 84px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--text-strong);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .progress-track {
+      position: relative;
+      height: 24px;
+      background: #0d0d0d;
+      border: 1px solid rgba(229, 169, 59, 0.28);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--green-bright), var(--accent));
+      border-radius: 999px;
+      transition: width 180ms ease;
+    }
+
+    .progress-label {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 3px #000;
+      pointer-events: none;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      background: rgba(0, 0, 0, 0.28);
+      color: var(--text);
+      padding: 0 14px;
+      transition: border-color 140ms ease, background 140ms ease;
+    }
+
+    .search-wrap input::placeholder {
+      color: #837d72;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--accent);
+      background: rgba(0, 0, 0, 0.38);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn,
+    .filter-btn {
+      min-height: 40px;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      background: #1a1a1a;
+      color: var(--text);
+      padding: 9px 13px;
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: 0.025em;
+      transition: transform 130ms ease, background 130ms ease, border-color 130ms ease, color 130ms ease;
+    }
+
+    .btn:hover,
+    .filter-btn:hover {
+      transform: translateY(-1px);
+      background: var(--panel-3);
+      border-color: rgba(229, 169, 59, 0.45);
+    }
+
+    .btn:active,
+    .filter-btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: var(--accent-soft);
+      border-color: rgba(229, 169, 59, 0.45);
+      color: var(--text-strong);
+    }
+
+    .btn-danger {
+      background: var(--danger-soft);
+      border-color: rgba(189, 81, 68, 0.42);
+      color: #f2a79d;
+    }
+
+    .file-input,
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .app {
+      width: min(var(--max), calc(100% - 28px));
+      margin: 24px auto 30px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .panel {
+      background: rgba(35, 35, 35, 0.96);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 18px 44px var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 18px 20px;
+      display: grid;
+      gap: 14px;
+      border-bottom: 1px solid rgba(229, 169, 59, 0.16);
+      background: linear-gradient(180deg, rgba(229, 169, 59, 0.06), transparent);
+    }
+
+    .filter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: rgba(229, 169, 59, 0.55);
+      color: var(--text-strong);
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .image-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #bcb39f;
+    }
+
+    .image-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      box-shadow: 0 0 0 3px rgba(157, 150, 136, 0.12);
+    }
+
+    .image-status.ready .image-status-dot {
+      background: var(--green-bright);
+      box-shadow: 0 0 0 3px rgba(109, 175, 94, 0.14);
+    }
+
+    .image-status.loading .image-status-dot {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(229, 169, 59, 0.14);
+    }
+
+    .image-status.error .image-status-dot {
+      background: var(--danger);
+      box-shadow: 0 0 0 3px rgba(189, 81, 68, 0.14);
+    }
+
+    .checklist {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .item-row {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: var(--image-col, 56px) 22px 1fr;
+      align-items: center;
+      gap: 12px;
+      min-height: 72px;
+      padding: 10px 12px 10px 10px;
+      background: rgba(20, 20, 20, 0.78);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      user-select: none;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    .item-row:hover {
+      background: rgba(44, 44, 44, 0.92);
+      border-color: rgba(229, 169, 59, 0.36);
+      transform: translateY(-1px);
+    }
+
+    .item-row.completed {
+      background: var(--green-soft);
+      border-color: rgba(78, 130, 66, 0.52);
+    }
+
+    .item-row.image-wide {
+      --image-col: 86px;
+      --image-width: 86px;
+      --image-height: 56px;
+    }
+
+    .item-row.image-tall {
+      --image-col: 56px;
+      --image-width: 56px;
+      --image-height: 82px;
+      min-height: 96px;
+    }
+
+    .item-image {
+      position: relative;
+      width: var(--image-width, 56px);
+      height: var(--image-height, 56px);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(135deg, rgba(229, 169, 59, 0.12), rgba(78, 130, 66, 0.08)),
+        #141414;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      padding: 4px;
+      display: none;
+    }
+
+    .item-image.has-image img {
+      display: block;
+    }
+
+    .item-image.has-image .image-fallback {
+      display: none;
+    }
+
+    .image-fallback {
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding: 4px;
+    }
+
+    .item-row input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--green);
+      cursor: pointer;
+      justify-self: center;
+    }
+
+    .item-name {
+      min-width: 0;
+      line-height: 1.35;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .item-row.completed .item-name {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+
+    .empty {
+      display: none;
+      margin: 0 18px 18px;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed rgba(229, 169, 59, 0.25);
+      border-radius: var(--radius-lg);
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    .footer-note {
+      margin: 0 4px;
+      color: #a9a092;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translate(-50%, 14px);
+      z-index: 100;
+      max-width: min(480px, calc(100% - 28px));
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(229, 169, 59, 0.28);
+      background: rgba(18, 18, 18, 0.94);
+      color: var(--text);
+      box-shadow: 0 12px 30px var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 860px) {
+      .brand-row,
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-summary,
+      .button-row {
+        justify-content: flex-start;
+      }
+
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar-inner,
+      .app {
+        width: min(100% - 18px, var(--max));
+      }
+
+      .button-row .btn {
+        flex: 1 1 calc(50% - 8px);
+      }
+
+      .filter-btn {
+        flex: 1 1 auto;
+      }
+
+      .panel-head,
+      .checklist {
+        padding: 14px;
+      }
+
+      .item-row {
+        grid-template-columns: var(--image-col-mobile, 48px) 22px 1fr;
+        min-height: 66px;
+      }
+
+      .item-row.image-wide {
+        --image-col-mobile: 74px;
+        --image-width: 74px;
+        --image-height: 48px;
+      }
+
+      .item-row.image-tall {
+        --image-col-mobile: 48px;
+        --image-width: 48px;
+        --image-height: 70px;
+        min-height: 82px;
+      }
+
+      .item-image {
+        width: var(--image-width, 48px);
+        height: var(--image-height, 48px);
+        border-radius: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-row">
+        <div class="brand">
+          <h1>EFT Kappa Collector Checklist</h1>
+          <p class="subtitle">Track Collector quest items with local auto-save, search, filters, backup export, and item icons.</p>
+        </div>
+
+        <div class="progress-summary" aria-live="polite">
+          <span class="progress-badge" id="progressCount">0 / 43</span>
+          <span class="progress-badge" id="progressPercent">0%</span>
+        </div>
+      </div>
+
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-label="Kappa Collector checklist progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="progressTrack"
+      >
+        <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-label" id="progressLabel">0 / 43 complete</div>
+      </div>
+
+      <div class="controls" aria-label="Checklist tools">
+        <div class="search-wrap">
+          <label class="sr-only" for="searchInput">Search items</label>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Search item name..." />
+        </div>
+
+        <div class="button-row">
+          <button class="btn btn-primary" id="exportBtn" type="button">Export</button>
+          <button class="btn" id="importBtn" type="button">Import</button>
+          <button class="btn" id="clearSearchBtn" type="button">Clear Search</button>
+          <button class="btn btn-danger" id="resetBtn" type="button">Reset</button>
+          <input class="file-input" id="importFile" type="file" accept="application/json,.json" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="panel" aria-label="Kappa Collector checklist">
+      <div class="panel-head">
+        <div class="filter-row">
+          <div class="filters" aria-label="Filter checklist items">
+            <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" type="button" data-filter="missing" aria-pressed="false">Missing</button>
+            <button class="filter-btn" type="button" data-filter="completed" aria-pressed="false">Completed</button>
+          </div>
+          <div class="visible-count" id="visibleCount">Showing 43 items</div>
+        </div>
+
+        <div class="status-line">
+          <span>Your progress is stored only in this browser.</span>
+          <span class="image-status" id="imageStatus"><span class="image-status-dot"></span><span id="imageStatusText">Loading item icons</span></span>
+        </div>
+      </div>
+
+      <div class="checklist" id="checklist"></div>
+
+      <div class="empty" id="emptyState">
+        <strong>No items found.</strong><br />
+        Try another search or change the filter.
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Use Export before clearing browser data or moving to another device. Item icons are loaded online when available.
+    </p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    const STORAGE_KEY = "eft_kappa_collector_checklist";
+    const ICON_CACHE_KEY = "eft_kappa_collector_icons_v2";
+    const ICON_ENDPOINT = "https://api.tarkov.dev/graphql";
+
+    const ITEMS = Object.freeze([
+      { id: "fireklean", name: "#FireKlean gun lube", aliases: ["FireKlean gun lube"] },
+      { id: "tea", name: "42 Signature Blend English Tea", aliases: [] },
+      { id: "antique-axe", name: "Antique axe", aliases: [] },
+      { id: "evasion-armband", name: "Armband (Evasion)", aliases: ["Evasion armband"] },
+      { id: "axel", name: "Axel parrot figurine", aliases: [] },
+      { id: "baddie", name: "Baddie's red beard", aliases: [] },
+      { id: "bakeezy", name: "BakeEzy cook book", aliases: [] },
+      { id: "battered-book", name: "Battered antique book", aliases: [] },
+      { id: "bear-buddy", name: "BEAR Buddy plush toy", aliases: [] },
+      { id: "coffee", name: "Can of Dr. Lupo's coffee beans", aliases: ["Dr. Lupo's coffee beans"] },
+      { id: "ratcola", name: "Can of RatCola soda", aliases: ["RatCola soda"] },
+      { id: "sprats", name: "Can of sprats", aliases: ["Sprats"] },
+      { id: "beard-oil", name: "Deadlyslob's beard oil", aliases: [] },
+      { id: "ushanka", name: "Domontovich ushanka hat", aliases: [] },
+      { id: "drd", name: "DRD body armor", aliases: [] },
+      { id: "mustache", name: "Fake mustache", aliases: [] },
+      { id: "gingy", name: "Gingy keychain", aliases: [] },
+      { id: "glorious", name: "Glorious E lightweight armored mask", aliases: [] },
+      { id: "gold-phone", name: "Golden 1GPhone smartphone", aliases: ["Golden 1GPhone"] },
+      { id: "golden-egg", name: "Golden egg", aliases: [] },
+      { id: "rooster", name: "Golden rooster figurine", aliases: [] },
+      { id: "wrench", name: "Inseq gas pipe wrench", aliases: [] },
+      { id: "mayo", name: "Jar of DevilDog mayo", aliases: ["DevilDog mayo"] },
+      { id: "johnb", name: "JohnB Liquid DNB glasses", aliases: [] },
+      { id: "kotton", name: "Kotton beanie", aliases: [] },
+      { id: "loot-lord", name: "Loot Lord plushie", aliases: [] },
+      { id: "rat-poison", name: "LVNDMARK's rat poison", aliases: [] },
+      { id: "dumbbell", name: "Mazoni golden dumbbell", aliases: [] },
+      { id: "forklift", name: "Missam forklift key", aliases: [] },
+      { id: "nut-sack", name: "Nut Sack balaclava", aliases: [] },
+      { id: "firesteel", name: "Old firesteel", aliases: [] },
+      { id: "plague-mask", name: "Pestily plague mask", aliases: [] },
+      { id: "press-pass", name: "Press pass (issued for NoiceGuy)", aliases: ["Press pass"] },
+      { id: "raven", name: "Raven figurine", aliases: [] },
+      { id: "shroud", name: "Shroud half-mask", aliases: [] },
+      { id: "silver-badge", name: "Silver Badge", aliases: [] },
+      { id: "smoke", name: "Smoke balaclava", aliases: [] },
+      { id: "kunai", name: "Tamatthi kunai knife replica", aliases: [] },
+      { id: "splint", name: "Tigzresq splint", aliases: [] },
+      { id: "pick", name: "Veritas guitar pick", aliases: [] },
+      { id: "cyborg-killer", name: "Video cassette with the Cyborg Killer movie", aliases: ["Cyborg Killer movie"] },
+      { id: "sneaker", name: "Viibiin sneaker", aliases: [] },
+      { id: "wallet", name: "WZ Wallet", aliases: [] }
+    ]);
+
+    const itemNames = ITEMS.map(item => item.name);
+    const checklistEl = document.getElementById("checklist");
+    const progressCountEl = document.getElementById("progressCount");
+    const progressPercentEl = document.getElementById("progressPercent");
+    const progressFillEl = document.getElementById("progressFill");
+    const progressLabelEl = document.getElementById("progressLabel");
+    const progressTrackEl = document.getElementById("progressTrack");
+    const visibleCountEl = document.getElementById("visibleCount");
+    const emptyStateEl = document.getElementById("emptyState");
+    const searchInputEl = document.getElementById("searchInput");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const importBtn = document.getElementById("importBtn");
+    const importFileEl = document.getElementById("importFile");
+    const resetBtn = document.getElementById("resetBtn");
+    const toastEl = document.getElementById("toast");
+    const imageStatusEl = document.getElementById("imageStatus");
+    const imageStatusTextEl = document.getElementById("imageStatusText");
+    const filterButtons = [...document.querySelectorAll("[data-filter]")];
+
+    let progress = loadProgress();
+    let icons = loadIconCache();
+    let activeFilter = "all";
+    let toastTimer = 0;
+
+    function createEmptyProgress() {
+      return itemNames.reduce((acc, name) => {
+        acc[name] = false;
+        return acc;
+      }, {});
+    }
+
+    function isPlainObject(value) {
+      return Object.prototype.toString.call(value) === "[object Object]";
+    }
+
+    function hasNumberedKeys(value) {
+      if (!isPlainObject(value)) return false;
+      return Object.keys(value).some(key => /^\d+$/.test(key));
+    }
+
+    function normalizeProgress(data) {
+      const fallback = createEmptyProgress();
+      if (!isPlainObject(data)) return fallback;
+
+      const source = isPlainObject(data.progress) ? data.progress : isPlainObject(data.state) ? data.state : data;
+
+      if (Array.isArray(data.completedItems)) {
+        const completed = new Set(data.completedItems);
+        return itemNames.reduce((acc, name) => {
+          acc[name] = completed.has(name);
+          return acc;
+        }, {});
+      }
+
+      if (Array.isArray(source.completedItems)) {
+        const completed = new Set(source.completedItems);
+        return itemNames.reduce((acc, name) => {
+          acc[name] = completed.has(name);
+          return acc;
+        }, {});
+      }
+
+      if (hasNumberedKeys(source)) {
+        return itemNames.reduce((acc, name, order) => {
+          acc[name] = Boolean(source[order] || source[String(order)]);
+          return acc;
+        }, {});
+      }
+
+      return itemNames.reduce((acc, name) => {
+        acc[name] = Boolean(source[name]);
+        return acc;
+      }, {});
+    }
+
+    function loadProgress() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? normalizeProgress(JSON.parse(saved)) : createEmptyProgress();
+      } catch {
+        return createEmptyProgress();
+      }
+    }
+
+    function saveProgress() {
+      const payload = {
+        app: "EFT Kappa Collector Checklist",
+        savedAt: new Date().toISOString(),
+        totalItems: ITEMS.length,
+        progress
+      };
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch {
+        showToast("Could not save locally. Export your progress to keep a backup.");
+      }
+    }
+
+    function loadIconCache() {
+      try {
+        const saved = localStorage.getItem(ICON_CACHE_KEY);
+        return saved ? JSON.parse(saved) : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveIconCache() {
+      try {
+        localStorage.setItem(ICON_CACHE_KEY, JSON.stringify(icons));
+      } catch {}
+    }
+
+    function getIconData(id) {
+      const entry = icons[id];
+      if (!entry) return null;
+
+      if (typeof entry === "string") {
+        return { src: entry, width: 1, height: 1 };
+      }
+
+      if (isPlainObject(entry) && entry.src) {
+        return {
+          src: String(entry.src),
+          width: Number(entry.width) || 1,
+          height: Number(entry.height) || 1
+        };
+      }
+
+      return null;
+    }
+
+    function iconIsAvailable(entry) {
+      if (!entry) return false;
+      if (typeof entry === "string") return Boolean(entry);
+      return isPlainObject(entry) && Boolean(entry.src);
+    }
+
+    function getImageShape(iconData) {
+      if (!iconData) return "square";
+
+      const width = Number(iconData.width) || 1;
+      const height = Number(iconData.height) || 1;
+
+      if (width >= height * 1.35) return "wide";
+      if (height >= width * 1.35) return "tall";
+      return "square";
+    }
+
+    function applyImageShape(row, imageWrap, iconData) {
+      const shape = getImageShape(iconData);
+
+      row.classList.remove("image-wide", "image-tall");
+      imageWrap.classList.remove("image-wide", "image-tall");
+
+      if (shape === "wide" || shape === "tall") {
+        row.classList.add(`image-${shape}`);
+        imageWrap.classList.add(`image-${shape}`);
+      }
+    }
+
+    function getFilteredItems() {
+      const query = searchInputEl.value.trim().toLowerCase();
+
+      return ITEMS.filter(item => {
+        const matchesSearch = !query || item.name.toLowerCase().includes(query) || item.aliases.some(alias => alias.toLowerCase().includes(query));
+        const isCompleted = Boolean(progress[item.name]);
+        const matchesFilter =
+          activeFilter === "all" ||
+          (activeFilter === "completed" && isCompleted) ||
+          (activeFilter === "missing" && !isCompleted);
+
+        return matchesSearch && matchesFilter;
+      });
+    }
+
+    function getInitials(name) {
+      return name
+        .replace(/^#/, "")
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word => word[0].toUpperCase())
+        .join("");
+    }
+
+    function renderChecklist() {
+      const fragment = document.createDocumentFragment();
+      const visibleItems = getFilteredItems();
+
+      checklistEl.textContent = "";
+
+      visibleItems.forEach(item => {
+        const row = document.createElement("label");
+        row.className = "item-row";
+        row.dataset.itemId = item.id;
+
+        if (progress[item.name]) row.classList.add("completed");
+
+        const iconData = getIconData(item.id);
+        const imageWrap = document.createElement("span");
+        imageWrap.className = "item-image";
+        imageWrap.dataset.itemId = item.id;
+        applyImageShape(row, imageWrap, iconData);
+
+        const imageFallback = document.createElement("span");
+        imageFallback.className = "image-fallback";
+        imageFallback.textContent = getInitials(item.name);
+
+        const image = document.createElement("img");
+        image.alt = "";
+        image.loading = "lazy";
+        image.decoding = "async";
+
+        if (iconData && iconData.src) {
+          image.src = iconData.src;
+          imageWrap.classList.add("has-image");
+        }
+
+        image.onerror = () => {
+          image.removeAttribute("src");
+          imageWrap.classList.remove("has-image");
+        };
+
+        imageWrap.append(image, imageFallback);
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = Boolean(progress[item.name]);
+        checkbox.setAttribute("aria-label", item.name);
+
+        checkbox.addEventListener("change", () => {
+          progress[item.name] = checkbox.checked;
+          row.classList.toggle("completed", checkbox.checked);
+          saveProgress();
+          updateProgress();
+          updateVisibleCount();
+        });
+
+        const text = document.createElement("span");
+        text.className = "item-name";
+        text.textContent = item.name;
+
+        row.append(imageWrap, checkbox, text);
+        fragment.appendChild(row);
+      });
+
+      checklistEl.appendChild(fragment);
+      emptyStateEl.style.display = visibleItems.length ? "none" : "block";
+      updateProgress();
+      updateVisibleCount();
+    }
+
+    function updateProgress() {
+      const completed = itemNames.filter(name => progress[name]).length;
+      const total = itemNames.length;
+      const percent = total ? Math.round((completed / total) * 100) : 0;
+
+      progressCountEl.textContent = `${completed} / ${total}`;
+      progressPercentEl.textContent = `${percent}%`;
+      progressFillEl.style.width = `${percent}%`;
+      progressLabelEl.textContent = `${completed} / ${total} complete`;
+      progressTrackEl.setAttribute("aria-valuenow", String(percent));
+    }
+
+    function updateVisibleCount() {
+      const count = getFilteredItems().length;
+      visibleCountEl.textContent = `Showing ${count} ${count === 1 ? "item" : "items"}`;
+    }
+
+    function setFilter(nextFilter) {
+      activeFilter = nextFilter;
+
+      filterButtons.forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.filter === nextFilter));
+      });
+
+      renderChecklist();
+    }
+
+    function getDateStamp() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function exportProgress() {
+      const completedItems = itemNames.filter(name => progress[name]);
+      const missingItems = itemNames.filter(name => !progress[name]);
+      const payload = {
+        app: "EFT Kappa Collector Checklist",
+        exportedAt: new Date().toISOString(),
+        totalItems: itemNames.length,
+        completedCount: completedItems.length,
+        progress,
+        completedItems,
+        missingItems
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `eft_kappa_collector_${getDateStamp()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast("Progress exported.");
+    }
+
+    function importProgress(file) {
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = event => {
+        try {
+          const parsed = JSON.parse(String(event.target.result || ""));
+          progress = normalizeProgress(parsed);
+          saveProgress();
+          renderChecklist();
+          importFileEl.value = "";
+          showToast("Progress imported.");
+        } catch {
+          importFileEl.value = "";
+          showToast("Import failed. Choose a valid checklist JSON file.");
+        }
+      };
+
+      reader.onerror = () => {
+        importFileEl.value = "";
+        showToast("Could not read this file.");
+      };
+
+      reader.readAsText(file);
+    }
+
+    function resetAll() {
+      const confirmed = confirm("Reset all Kappa Collector checklist progress?");
+      if (!confirmed) return;
+
+      progress = createEmptyProgress();
+      saveProgress();
+      renderChecklist();
+      showToast("Progress reset.");
+    }
+
+    function clearSearch() {
+      searchInputEl.value = "";
+      renderChecklist();
+      searchInputEl.focus();
+    }
+
+    function setImageStatus(kind, message) {
+      imageStatusEl.classList.remove("ready", "loading", "error");
+      if (kind) imageStatusEl.classList.add(kind);
+      imageStatusTextEl.textContent = message;
+    }
+
+    function normalizeText(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/[#'’.(),]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function findApiItem(apiItems, item) {
+      const names = [item.name, ...item.aliases].map(normalizeText);
+      return apiItems.find(candidate => names.includes(normalizeText(candidate.name))) || null;
+    }
+
+    function applyIconUpdates() {
+      document.querySelectorAll(".item-image").forEach(wrapper => {
+        const id = wrapper.dataset.itemId;
+        const image = wrapper.querySelector("img");
+        const iconData = getIconData(id);
+        if (!image || !iconData || !iconData.src) return;
+
+        image.src = iconData.src;
+        wrapper.classList.add("has-image");
+
+        const row = wrapper.closest(".item-row");
+        if (row) applyImageShape(row, wrapper, iconData);
+      });
+    }
+
+    async function loadIcons() {
+      const cachedCount = Object.values(icons).filter(iconIsAvailable).length;
+      if (cachedCount >= ITEMS.length) {
+        setImageStatus("ready", "Item icons loaded");
+        return;
+      }
+
+      setImageStatus("loading", "Loading item icons");
+
+      try {
+        const query = `
+          query ItemIcons {
+            items {
+              name
+              width
+              height
+              iconLink
+              gridImageLink
+              image512pxLink
+            }
+          }
+        `;
+
+        const response = await fetch(ICON_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query })
+        });
+
+        if (!response.ok) throw new Error("Icon request failed.");
+
+        const result = await response.json();
+        const apiItems = Array.isArray(result.data && result.data.items) ? result.data.items : [];
+
+        ITEMS.forEach(item => {
+          const match = findApiItem(apiItems, item);
+          const src = match && (match.gridImageLink || match.image512pxLink || match.iconLink);
+          if (src) {
+            icons[item.id] = {
+              src,
+              width: Number(match.width) || 1,
+              height: Number(match.height) || 1
+            };
+          }
+        });
+
+        saveIconCache();
+        applyIconUpdates();
+
+        const loaded = Object.values(icons).filter(iconIsAvailable).length;
+        setImageStatus(loaded ? "ready" : "error", loaded ? `Item icons loaded (${loaded}/${ITEMS.length})` : "Item icons unavailable");
+      } catch {
+        const loaded = Object.values(icons).filter(iconIsAvailable).length;
+        setImageStatus(loaded ? "ready" : "error", loaded ? `Using cached icons (${loaded}/${ITEMS.length})` : "Item icons unavailable");
+      }
+    }
+
+    function showToast(message) {
+      window.clearTimeout(toastTimer);
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+
+      toastTimer = window.setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2400);
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => setFilter(button.dataset.filter));
+    });
+
+    searchInputEl.addEventListener("input", renderChecklist);
+    clearSearchBtn.addEventListener("click", clearSearch);
+    exportBtn.addEventListener("click", exportProgress);
+    importBtn.addEventListener("click", () => importFileEl.click());
+    resetBtn.addEventListener("click", resetAll);
+
+    importFileEl.addEventListener("change", event => {
+      const file = event.target.files && event.target.files[0];
+      importProgress(file);
+    });
+
+    renderChecklist();
+    saveProgress();
+    loadIcons();
+  </script>
+</body>
+</html>
